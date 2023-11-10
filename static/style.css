@@ -1,0 +1,59 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+header {
+    background-color: darkseagreen;
+    padding: 0 20px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: darkseagreen;
+    padding: 0 20px;
+}
+
+.logo {
+    color: white;
+    font-size: 28pt;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+}
+
+li {
+    margin-right: 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    border: 1px solid transparent;
+    padding: 8px 12px;
+}
+
+nav a:hover {
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+
+.logout {
+    margin-left: auto;
+}
+
+main {
+    flex: 1;
+    text-align: center;
+}
+
+footer {
+    font-size: 10pt;
+    margin: 15px;
+    text-align: center;
+}
