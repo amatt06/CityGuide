@@ -21,6 +21,10 @@ nav {
     font-size: 28pt;
 }
 
+.logo p {
+    margin: 25px 0;
+}
+
 ul {
     list-style: none;
     display: flex;
