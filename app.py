@@ -1,16 +1,27 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
+from forms.forms import RegistrationForm, LoginForm
+import secrets
 
 app = Flask(__name__)
 
-
-@app.route('/')
-def login():  # put application's code here
-    return render_template('login.html')
+app.secret_key = secrets.token_hex(16)
 
 
-@app.route('/register')
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        return redirect(url_for('preferences'))
+    return render_template('login.html', form=form)
+
+
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        # Backend Implementation here;
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form)
 
 
 @app.route('/logout')
