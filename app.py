@@ -26,7 +26,7 @@ def register():
 
 @app.route('/logout')
 def logout():
-    return render_template('login.html')
+    return redirect(url_for('login'))
 
 
 @app.route('/preferences')

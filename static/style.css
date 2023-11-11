@@ -51,13 +51,63 @@ nav a:hover {
     margin-left: auto;
 }
 
+h2 {
+    padding-top: 7px;
+    font-size: 26pt;
+}
+
 main {
     flex: 1;
     text-align: center;
+    height: 78vh;
 }
 
 footer {
-    font-size: 10pt;
-    margin: 15px;
+    font-size: 7pt;
     text-align: center;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    padding: 20px;
+    text-align: left;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form input {
+    margin-top: 10px;
+    padding: 7px;
+    max-width: 35vw;
+    font-size: 13pt;
+    border-radius: 9px;
+    border: 0.5pt solid black;
+    min-height: 3vh;
+    min-width: 18vw;
+}
+
+#submit {
+    max-width: 9vw;
+    max-height: 6vh;
+    min-width: 5vw;
+    min-height: 5vh;
+    background-color: white;
+    color: black;
+    font-size: 9pt;
+    border-radius: 9px;
+    border: 0.5pt solid black;
+
+}
+
+#submit:hover {
+    background-color: darkseagreen;
+    color: white;
+}
+
+main a {
+    color: darkseagreen;
 }
