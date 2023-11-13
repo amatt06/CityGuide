@@ -1,7 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- Register-specific content -->
-<h1>Preferences</h1>
-<!-- Include page-specific CSS or scripts if needed -->
+
+    <h1>Preferences</h1>
+
+    <div class="form-area">
+        <form method="POST" action="{{ url_for('preferences') }}" id="preferences-form">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group" id="city-selection">
+                {{ form.city.label }} <br>
+                {{ form.city(class="form-control") }}
+            </div>
+
+            <div class="form-group" id="location-type-selection">
+                {{ form.location_type.label }} <br>
+                {{ form.location_type(class="form-control") }}
+            </div>
+
+            <div class="form-group" id="pricing-selection">
+                {{ form.pricing.label }} <br>
+                {{ form.pricing(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.sorting_option.label }} <br>
+                {{ form.sorting_option(class="form-control") }}
+            </div>
+
+            <div class="form-group" id="preferences-submit">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+
+        </form>
+    </div>
+
 {% endblock %}

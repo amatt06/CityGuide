@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for
-from forms.forms import RegistrationForm, LoginForm
+from forms.forms import RegistrationForm, LoginForm, PreferencesForm
 import secrets
 
 app = Flask(__name__)
@@ -29,9 +29,12 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/preferences')
+@app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
-    return render_template('preferences-input.html')
+    form = PreferencesForm()
+    if form.validate_on_submit():
+        return redirect(url_for('results'))
+    return render_template('preferences-input.html', form=form)
 
 
 @app.route('/results')

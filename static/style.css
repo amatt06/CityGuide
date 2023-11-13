@@ -111,3 +111,23 @@ form input {
 main a {
     color: darkseagreen;
 }
+
+#preferences-form {
+    text-align: left;
+    align-items: flex-start;
+}
+
+.form-area {
+    flex: auto;
+    align-items: center;
+    margin: 0 40%;
+}
+
+#preferences-submit{
+    padding: 10px 40%;
+}
+
+
+select {
+    margin-top: 12px;
+}
