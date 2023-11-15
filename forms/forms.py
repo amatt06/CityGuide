@@ -1,6 +1,6 @@
 # forms.py
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, RadioField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo
 
 
@@ -19,18 +19,6 @@ class LoginForm(FlaskForm):
 
 class PreferencesForm(FlaskForm):
     city = StringField('City: ', validators=[DataRequired()])
-
-    location_type = SelectField('Location Type: ', choices=[
-        ('restaurants', 'Restaurants'),
-        ('attractions', 'Attractions'),
-        ('both', 'Both')],
-                               default='attractions', validators=[DataRequired()])
-
-    pricing = SelectField('Pricing: ', choices=[
-        ('free', 'Free'),
-        ('paid', 'Paid'),
-        ('both', 'Both')],
-                         default='free', validators=[DataRequired()])
 
     sorting_option = SelectField('Sorting Option: ', choices=[
         ('rating', 'Rating'),
