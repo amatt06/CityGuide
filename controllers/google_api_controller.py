@@ -74,20 +74,3 @@ class GoogleMapsAPIController:
         sort_places(all_places, sorting_option)
 
         return all_places
-
-
-api_controller = GoogleMapsAPIController()
-test_city = 'Brisbane'
-test_sorting_option = 'review'
-test_num_results = 5
-test_place_type = 'all'
-
-google_maps_data = api_controller.get_google_maps_data(test_city, test_sorting_option, test_num_results,
-                                                       test_place_type)
-
-print("Retrieved Google Maps Data:")
-for place in google_maps_data:
-    print(
-        f"Name: {place['name']}, Rating: {place['rating']}, Address: {place['formatted_address']}, "
-        f"Total Ratings: {place['user_ratings_total']}, "
-        f"Price Level: {place['price_level']}")

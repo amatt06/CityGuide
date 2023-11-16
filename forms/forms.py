@@ -19,10 +19,20 @@ class LoginForm(FlaskForm):
 
 class PreferencesForm(FlaskForm):
     city = StringField('City: ', validators=[DataRequired()])
-
+    place_type = SelectField('Place Type: ', choices=[
+        ('all', 'All'),
+        ('restaurants', 'Restaurants'),
+        ('attractions', 'Attractions')],
+                             default='all', validators=[DataRequired()])
     sorting_option = SelectField('Sorting Option: ', choices=[
         ('rating', 'Rating'),
-        ('popularity', 'Popularity')],
+        ('reviews', 'Popularity')],
                                  default='rating', validators=[DataRequired()])
-
+    num_results = SelectField('Number of Results: ', choices=[
+        ('5', '5'),
+        ('10', '10'),
+        ('15', '15'),
+        ('20', '20'),
+        ('25', '25')],
+                              default='5', validators=[DataRequired()])
     submit = SubmitField('Submit')

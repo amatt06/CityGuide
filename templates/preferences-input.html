@@ -13,9 +13,19 @@
                 {{ form.city(class="form-control") }}
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="place-type-selection">
+                {{ form.place_type.label }} <br>
+                {{ form.place_type(class="form-control") }}
+            </div>
+
+            <div class="form-group" id="sorting-option-selection">
                 {{ form.sorting_option.label }} <br>
                 {{ form.sorting_option(class="form-control") }}
+            </div>
+
+            <div class="form-group" id="num-results-selection">
+                {{ form.num_results.label }} <br>
+                {{ form.num_results(class="form-control") }}
             </div>
 
             <div class="form-group" id="preferences-submit">

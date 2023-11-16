@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from forms.forms import RegistrationForm, LoginForm, PreferencesForm
+from controllers.google_api_controller import GoogleMapsAPIController, sort_places, parse_google_maps_data
 import secrets
 
 app = Flask(__name__)
@@ -33,7 +34,24 @@ def logout():
 def preferences():
     form = PreferencesForm()
     if form.validate_on_submit():
-        return redirect(url_for('results'))
+        city = form.city.data
+        place_type = form.place_type.data
+        sorting_option = form.sorting_option.data
+        num_results = int(form.num_results.data)
+
+        api_controller = GoogleMapsAPIController()
+        google_maps_data = api_controller.get_google_maps_data(city, sorting_option, num_results, place_type)
+
+        ### TESTING ###
+        # for place in google_maps_data:
+        #     print(
+        #         f"Name: {place['name']}, Rating: {place['rating']}, Address: {place['formatted_address']}, "
+        #         f"Total Ratings: {place['user_ratings_total']}, "
+        #         f"Price Level: {place['price_level']}")
+        #################
+
+        return render_template('results.html', google_maps_data=google_maps_data)
+
     return render_template('preferences-input.html', form=form)
 
 
