@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request
 from forms.forms import RegistrationForm, LoginForm, PreferencesForm, SaveTripForm
-from controllers.google_api_controller import GoogleMapsAPIController
+from API.google_api_controller import GoogleMapsAPIController
 import secrets
 
 app = Flask(__name__)
