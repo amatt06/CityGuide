@@ -27,10 +27,13 @@
         </tbody>
     </table>
 
-{#    <form method="POST" action="{{ url_for('save_trip') }}">#}
-{#        <label for="trip_name">Trip Name:</label>#}
-{#        <input type="text" id="trip_name" name="trip_name" required>#}
-{#        <button type="submit">Save Trip</button>#}
-{#    </form>#}
+    <form method="POST" action="{{ url_for('save_trip') }}">
+        {{ save_trip_form.hidden_tag() }}
+        <label for="trip_name">Trip Name:</label>
+        {{ save_trip_form.trip_name }}
+        <label for="trip_notes">Notes:</label>
+        {{ save_trip_form.trip_notes }}
+        <button type="submit">Save Trip</button>
+    </form>
 
 {% endblock %}

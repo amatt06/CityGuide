@@ -36,3 +36,9 @@ class PreferencesForm(FlaskForm):
         ('25', '25')],
                               default='5', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class SaveTripForm(FlaskForm):
+    trip_name = StringField('Trip Name:', validators=[DataRequired()])
+    trip_notes = StringField('Notes:')
+    submit = SubmitField('Save Trip')
