@@ -59,12 +59,16 @@ h2 {
 main {
     flex: 1;
     text-align: center;
-    height: 78vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 10px;
 }
+
 
 footer {
     font-size: 7pt;
     text-align: center;
+    margin-top: auto;
     margin-bottom: 15px;
 }
 
@@ -123,7 +127,7 @@ main a {
     margin: 0 40%;
 }
 
-#preferences-submit{
+#preferences-submit {
     padding: 10px 40%;
 }
 
@@ -131,3 +135,21 @@ main a {
 select {
     margin-top: 12px;
 }
+
+table {
+    text-align: left;
+    border-collapse: collapse;
+    width: 80%; /* Adjust the width as needed */
+    margin: auto; /* Center the table */
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: darkseagreen;
+    color: white;
+}
+
