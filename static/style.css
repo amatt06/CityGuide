@@ -56,6 +56,11 @@ h2 {
     font-size: 26pt;
 }
 
+h3 {
+    padding-top: 15px;
+    font-size: 18pt;
+}
+
 main {
     flex: 1;
     text-align: center;
@@ -152,4 +157,3 @@ th {
     background-color: darkseagreen;
     color: white;
 }
-
