@@ -1,4 +1,4 @@
-from data.db_controller import email_exists
+from db.city_guide_user import email_exists
 
 
 def login_user(email, password):

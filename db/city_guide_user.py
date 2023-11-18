@@ -17,4 +17,4 @@ def email_exists(email):
         print(f"Error checking email uniqueness: {e}")
         return False
 
-    return 'Item' not in response
+    return 'Item' in response

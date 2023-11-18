@@ -1,6 +1,6 @@
 import bcrypt
-from data.db_controller import dynamodb
-from data.db_controller import email_exists
+from db.city_guide_user import dynamodb
+from db.city_guide_user import email_exists
 
 
 def hash_password(password):
@@ -9,7 +9,7 @@ def hash_password(password):
 
 
 def register_user(email, password):
-    if not email_exists(email):
+    if email_exists(email):
         return None
 
     hashed_password = hash_password(password)
