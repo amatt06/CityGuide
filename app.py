@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, flash
 from forms.forms import RegistrationForm, LoginForm, PreferencesForm, SaveTripForm
 from API.google_api_controller import GoogleMapsAPIController
 from controllers.user_register_controller import register_user
@@ -23,7 +23,7 @@ def register():
     if form.validate_on_submit():
         result = register_user(form.email.data, form.password.data)
         if result is None:
-            form.error_message.data = "Email already exists."
+            flash("Email already exists.", 'error')
             return render_template('register.html', form=form)
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
