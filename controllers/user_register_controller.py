@@ -1,24 +1,6 @@
 import bcrypt
-import boto3
-from botocore.exceptions import ClientError
-
-dynamodb = boto3.resource('dynamodb', region_name='ap-southeast-2')
-
-
-def is_email_unique(email):
-    table = dynamodb.Table('CityGuideUsers')
-
-    try:
-        response = table.get_item(
-            Key={
-                'Email': email
-            }
-        )
-    except ClientError as e:
-        print(f"Error checking email uniqueness: {e}")
-        return False
-
-    return 'Item' not in response
+from data.db_controller import dynamodb
+from data.db_controller import email_exists
 
 
 def hash_password(password):
@@ -27,7 +9,7 @@ def hash_password(password):
 
 
 def register_user(email, password):
-    if not is_email_unique(email):
+    if not email_exists(email):
         return None
 
     hashed_password = hash_password(password)
