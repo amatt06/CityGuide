@@ -1,6 +1,5 @@
 import bcrypt
-from db.city_guide_user import dynamodb
-from db.city_guide_user import email_exists
+from db.city_guide_user import email_exists, table
 
 
 def hash_password(password):
@@ -13,9 +12,6 @@ def register_user(email, password):
         return None
 
     hashed_password = hash_password(password)
-
-    table_name = 'CityGuideUsers'
-    table = dynamodb.Table(table_name)
 
     table.put_item(
         Item={
