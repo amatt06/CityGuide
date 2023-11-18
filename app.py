@@ -1,8 +1,9 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, session
 from forms.forms import RegistrationForm, LoginForm, PreferencesForm, SaveTripForm
 from API.google_api_controller import GoogleMapsAPIController
 from controllers.user_register_controller import register_user
 from controllers.user_login_controller import authenticate, logout
+from decorators.decorators import login_required, logout_required
 import secrets
 
 app = Flask(__name__)
@@ -10,7 +11,8 @@ app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'], endpoint='login')
+@logout_required
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -19,7 +21,8 @@ def login():
     return render_template('login.html', form=form)
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'], endpoint='register')
+@logout_required
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -31,13 +34,15 @@ def register():
     return render_template('register.html', form=form)
 
 
-@app.route('/logout')
+@app.route('/logout', endpoint='logout_route')
+@login_required
 def logout_route():
     logout()
     return redirect(url_for('login'))
 
 
-@app.route('/preferences', methods=['GET', 'POST'])
+@app.route('/preferences', methods=['GET', 'POST'], endpoint='preferences')
+@login_required
 def preferences():
     form = PreferencesForm()
     save_trip_form = SaveTripForm()
@@ -55,12 +60,14 @@ def preferences():
     return render_template('preferences-input.html', form=form)
 
 
-@app.route('/results')
+@app.route('/results', endpoint='results')
+@login_required
 def results():
     return render_template('results.html')
 
 
-@app.route('/save_trip', methods=['POST'])
+@app.route('/save_trip', methods=['POST'], endpoint='save_trip')
+@login_required
 def save_trip():
     # Handle the saving logic here
     # Example: Save the trip_name in the database
@@ -73,7 +80,8 @@ def save_trip():
     return redirect(url_for('trips'))
 
 
-@app.route('/trips')
+@app.route('/trips', endpoint='trips')
+@login_required
 def trips():
     return render_template('trips.html')
 
