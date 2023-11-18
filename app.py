@@ -16,8 +16,6 @@ def login():
     if form.validate_on_submit():
         if authenticate(form.email.data, form.password.data):
             return redirect(url_for('preferences'))
-        else:
-            flash("Invalid email or password", 'error')
     return render_template('login.html', form=form)
 
 

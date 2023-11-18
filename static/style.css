@@ -117,7 +117,7 @@ form input {
     color: white;
 }
 
-main a {
+main > a {
     color: darkseagreen;
 }
 
