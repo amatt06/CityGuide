@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, flash
 from forms.forms import RegistrationForm, LoginForm, PreferencesForm, SaveTripForm
 from API.google_api_controller import GoogleMapsAPIController
 from controllers.user_register_controller import register_user
+from controllers.user_login_controller import authenticate
 import secrets
 
 app = Flask(__name__)
@@ -13,7 +14,10 @@ app.secret_key = secrets.token_hex(16)
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        return redirect(url_for('preferences'))
+        if authenticate(form.email.data, form.password.data):
+            return redirect(url_for('preferences'))
+        else:
+            flash("Invalid email or password", 'error')
     return render_template('login.html', form=form)
 
 

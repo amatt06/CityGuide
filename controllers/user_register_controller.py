@@ -1,5 +1,5 @@
 import bcrypt
-from db.city_guide_user import email_exists, table
+from db.user_table import email_exists, table
 
 
 def hash_password(password):

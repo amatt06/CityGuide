@@ -1,7 +1,13 @@
-from db.city_guide_user import email_exists
+from db.user_table import email_exists
+from db.user_table import match_password
 
 
-def login_user(email, password):
+def authenticate(email, password):
     if email_exists(email):
-        print("implement here")
-        # implement
+        if match_password(email, password):
+            return True
+    return False
+
+
+def login():
+    print("Logged In")
