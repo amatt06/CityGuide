@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, flash
 from forms.forms import RegistrationForm, LoginForm, PreferencesForm, SaveTripForm
 from API.google_api_controller import GoogleMapsAPIController
 from controllers.user_register_controller import register_user
-from controllers.user_login_controller import authenticate
+from controllers.user_login_controller import authenticate, logout
 import secrets
 
 app = Flask(__name__)
@@ -32,7 +32,8 @@ def register():
 
 
 @app.route('/logout')
-def logout():
+def logout_route():
+    logout()
     return redirect(url_for('login'))
 
 

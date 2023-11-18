@@ -1,12 +1,12 @@
 from db.user_table import email_exists
 from db.user_table import match_password
-from flask import flash
+from flask import flash, session
 
 
 def authenticate(email, password):
     if email_exists(email):
         if match_password(email, password):
-            login(email)
+            session_start(email)
             return True
         else:
             flash("Incorrect password. Please try again.", 'error')
@@ -16,5 +16,12 @@ def authenticate(email, password):
     return False
 
 
-def login(email):
+def session_start(email):
+    session['user_email'] = email
     print(f"Logged In : {email}")
+
+
+def logout():
+    # Perform any logout-related tasks here
+    session.pop('user_email', None)
+    print("Logged Out")
