@@ -48,6 +48,7 @@ def logout_route():
 def preferences():
     form = PreferencesForm()
     save_trip_form = SaveTripForm()
+
     if form.validate_on_submit():
         city = form.city.data
         place_type = form.place_type.data
@@ -56,6 +57,8 @@ def preferences():
 
         api_controller = GoogleMapsAPIController()
         google_maps_data = api_controller.get_google_maps_data(city, sorting_option, num_results, place_type)
+
+        session['google_maps_data'] = google_maps_data
 
         return render_template('results.html', google_maps_data=google_maps_data, save_trip_form=save_trip_form)
 
@@ -88,7 +91,7 @@ def save_trip():
 
         return redirect(url_for('trips'))
 
-    print("Failed to save trip. Please try again.", 'error')
+    flash("Failed to save trip. Please try again.", 'error')
     return redirect(url_for('preferences'))
 
 
