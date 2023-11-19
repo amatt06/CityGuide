@@ -5,6 +5,7 @@ from controllers.user_register_controller import register_user
 from controllers.user_login_controller import authenticate, logout
 from decorators.decorators import login_required, logout_required
 from controllers.trip_controller import generate_trip_id, save_trip_to_db, save_to_s3
+from db.trip_table import get_user_trips
 import secrets
 
 app = Flask(__name__)
@@ -94,7 +95,11 @@ def save_trip():
 @app.route('/trips', endpoint='trips')
 @login_required
 def trips():
-    return render_template('trips.html')
+    user_email = session.get('user_email')
+
+    trips_data = get_user_trips(user_email)
+
+    return render_template('trips.html', trips_data=trips_data)
 
 
 if __name__ == '__main__':

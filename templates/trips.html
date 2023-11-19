@@ -1,7 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- Register-specific content -->
-<h1>Trips</h1>
-<!-- Include page-specific CSS or scripts if needed -->
+    <h1>Trips</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Trip Name</th>
+            <th>Trip Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for trip in trips_data %}
+            <tr>
+                <td>{{ trip.TripName }}</td>
+                <td>{{ trip.TripNotes }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

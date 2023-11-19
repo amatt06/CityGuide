@@ -1,4 +1,5 @@
 import boto3
+from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
 
 s3 = boto3.client('s3')
@@ -23,3 +24,15 @@ def save_trip(user_email, trip_id, trip_name, trip_notes, s3_url):
     except ClientError as e:
         print("Error saving trip:", e)
         return False
+
+
+def get_user_trips(user_email):
+    try:
+        response = trips_table.query(
+            KeyConditionExpression='Email = :email',
+            ExpressionAttributeValues={':email': user_email}
+        )
+        return response.get('Items', [])
+    except ClientError as e:
+        print(f"Error getting user trips: {e}")
+        return []
