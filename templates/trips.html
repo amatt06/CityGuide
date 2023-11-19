@@ -13,7 +13,7 @@
         <tbody>
         {% for trip in trips_data %}
             <tr>
-                <td>{{ trip.TripName }}</td>
+                <td><a href="{{ url_for('view_trip', trip_id=trip.TripID) }}">{{ trip.TripName }}</a></td>
                 <td>{{ trip.TripNotes }}</td>
             </tr>
         {% endfor %}

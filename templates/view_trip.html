@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Trip Details</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Rating</th>
+            <th>Address</th>
+            <th>Total Ratings</th>
+            <th>Price Level</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for place in trip_details %}
+            <tr>
+                <td>{{ place.name }}</td>
+                <td>{{ place.rating }}</td>
+                <td>{{ place.formatted_address }}</td>
+                <td>{{ place.user_ratings_total }}</td>
+                <td>{{ place.price_level }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
