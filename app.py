@@ -1,11 +1,10 @@
-from botocore.exceptions import ClientError
 from flask import Flask, render_template, redirect, url_for, request, flash, session
 from forms.forms import RegistrationForm, LoginForm, PreferencesForm, SaveTripForm
 from API.google_api_controller import GoogleMapsAPIController
 from controllers.user_register_controller import register_user
 from controllers.user_login_controller import authenticate, logout
 from decorators.decorators import login_required, logout_required
-from controllers.trip_controller import TripController
+from controllers.trip_controller import generate_trip_id, save_trip_to_db, save_to_s3
 import secrets
 
 app = Flask(__name__)
@@ -71,24 +70,25 @@ def results():
 @app.route('/save_trip', methods=['POST'], endpoint='save_trip')
 @login_required
 def save_trip():
-    try:
-        trip_controller = TripController()
+    if request.method == 'POST':
+        trip_name = request.form.get('trip_name')
+        trip_notes = request.form.get('trip_notes')
 
-        trip_id = trip_controller.generate_trip_id()
+        google_maps_data = session.get('google_maps_data', [])
 
-        email = session['user_email']
-        title = request.form['trip_name']
-        trip_data = request.form.to_dict()
-        s3_key = trip_controller.save_to_s3(email, trip_id, title, trip_data)
+        user_email = session.get('user_email')
+        trip_id = generate_trip_id(user_email, trip_name)
 
-        trip_controller.save_to_dynamodb(trip_id, email, title, request.form['trip_notes'], s3_key)
+        s3_url = save_to_s3(user_email, trip_id, google_maps_data)
 
-        print('Trip saved successfully!', 'success')
+        save_trip_to_db(user_email, trip_id, trip_name, trip_notes, s3_url)
+
+        session.pop('google_maps_data', None)
+
         return redirect(url_for('trips'))
 
-    except ClientError as e:
-        print(f"Error saving trip: {e}", 'error')
-        return redirect(url_for('preferences'))
+    print("Failed to save trip. Please try again.", 'error')
+    return redirect(url_for('preferences'))
 
 
 @app.route('/trips', endpoint='trips')

@@ -1,32 +1,22 @@
 import json
-from uuid import uuid4
-from db.trip_table import s3, trips_table, trip_data_bucket
+import uuid
+from db.trip_table import save_trip, s3, trip_data_bucket
 
 
-class TripController:
-    @staticmethod
-    def generate_trip_id():
-        return str(uuid4())
+def generate_trip_id(user_email, trip_name):
+    return str(uuid.uuid5(uuid.NAMESPACE_DNS, f"{user_email}_{trip_name}"))
 
-    @staticmethod
-    def save_to_s3(email, trip_id, title, trip_data):
-        s3_key = f"{email}/{trip_id}.{title}.json"
-        s3.put_object(
-            Bucket=trip_data_bucket,
-            Key=s3_key,
-            Body=json.dumps(trip_data),
-            ContentType='application/json'
-        )
-        return s3_key
 
-    @staticmethod
-    def save_to_dynamodb(trip_id, email, title, notes, s3_key):
-        trips_table.put_item(
-            Item={
-                'TripID': trip_id,
-                'Email': email,
-                'Title': title,
-                'Notes': notes,
-                'S3Key': s3_key
-            }
-        )
+def save_to_s3(user_email, trip_id, trip_data):
+    s3_key = f"{user_email}/{trip_id}.json"
+    s3_object_url = f"s3://{trip_data_bucket}/{s3_key}"
+
+    trip_json = json.dumps(trip_data)
+
+    s3.put_object(Bucket=trip_data_bucket, Key=s3_key, Body=trip_json)
+
+    return s3_object_url
+
+
+def save_trip_to_db(user_email, trip_id, trip_name, trip_notes, s3_url):
+    save_trip(user_email, trip_id, trip_name, trip_notes, s3_url)
