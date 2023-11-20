@@ -8,12 +8,12 @@ from controllers.trip_controller import generate_trip_id, save_trip_to_db, save_
 from db.trip_table import get_user_trips, get_trip_details
 import secrets
 
-app = Flask(__name__)
+application = Flask(__name__)
 
-app.secret_key = secrets.token_hex(16)
+application.secret_key = secrets.token_hex(16)
 
 
-@app.route('/', methods=['GET', 'POST'], endpoint='login')
+@application.route('/', methods=['GET', 'POST'], endpoint='login')
 @logout_required
 def login():
     form = LoginForm()
@@ -23,7 +23,7 @@ def login():
     return render_template('login.html', form=form)
 
 
-@app.route('/register', methods=['GET', 'POST'], endpoint='register')
+@application.route('/register', methods=['GET', 'POST'], endpoint='register')
 @logout_required
 def register():
     form = RegistrationForm()
@@ -36,14 +36,14 @@ def register():
     return render_template('register.html', form=form)
 
 
-@app.route('/logout', endpoint='logout_route')
+@application.route('/logout', endpoint='logout_route')
 @login_required
 def logout_route():
     logout()
     return redirect(url_for('login'))
 
 
-@app.route('/preferences', methods=['GET', 'POST'], endpoint='preferences')
+@application.route('/preferences', methods=['GET', 'POST'], endpoint='preferences')
 @login_required
 def preferences():
     form = PreferencesForm()
@@ -65,13 +65,13 @@ def preferences():
     return render_template('preferences-input.html', form=form)
 
 
-@app.route('/results', endpoint='results')
+@application.route('/results', endpoint='results')
 @login_required
 def results():
     return render_template('results.html')
 
 
-@app.route('/save_trip', methods=['POST'], endpoint='save_trip')
+@application.route('/save_trip', methods=['POST'], endpoint='save_trip')
 @login_required
 def save_trip():
     if request.method == 'POST':
@@ -95,7 +95,7 @@ def save_trip():
     return redirect(url_for('preferences'))
 
 
-@app.route('/trips', endpoint='trips')
+@application.route('/trips', endpoint='trips')
 @login_required
 def trips():
     user_email = session.get('user_email')
@@ -105,7 +105,7 @@ def trips():
     return render_template('trips.html', trips_data=trips_data)
 
 
-@app.route('/view_trip/<trip_id>', methods=['GET'], endpoint='view_trip')
+@application.route('/view_trip/<trip_id>', methods=['GET'], endpoint='view_trip')
 @login_required
 def view_trip(trip_id):
     user_email = session.get('user_email')
@@ -117,4 +117,4 @@ def view_trip(trip_id):
 
 
 if __name__ == '__main__':
-    app.run()
+    application.run()
