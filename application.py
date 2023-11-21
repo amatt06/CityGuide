@@ -5,6 +5,7 @@ from controllers.user_register_controller import register_user
 from controllers.user_login_controller import authenticate, logout
 from decorators.decorators import login_required, logout_required
 from controllers.trip_controller import generate_trip_id, save_trip_to_db, save_to_s3
+from controllers.send_email import invoke_lambda
 from db.trip_table import get_user_trips, get_trip_details
 import secrets
 
@@ -86,6 +87,7 @@ def save_trip():
         s3_url = save_to_s3(user_email, trip_id, google_maps_data)
 
         save_trip_to_db(user_email, trip_id, trip_name, trip_notes, s3_url)
+        invoke_lambda(user_email, trip_name, google_maps_data)
 
         session.pop('google_maps_data', None)
 
