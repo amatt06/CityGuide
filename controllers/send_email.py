@@ -1,19 +1,11 @@
+import requests
+
 import json
 
-import boto3
 
-
-def invoke_lambda(user_email, trip_name, google_maps_data):
-    lambda_client = boto3.client('lambda', region_name='sp-southeast-2')
+def invoke_lambda_api_gateway(user_email, trip_name, google_maps_data):
+    api_gateway_url = "https://cnzkyo3xkl.execute-api.ap-southeast-2.amazonaws.com/save_trip"
 
     payload = {'email': user_email, 'trip_name': trip_name, 'google_maps_data': google_maps_data}
 
-    try:
-        response = lambda_client.invoke(
-            FunctionName='CityGuideEmail',
-            InvocationType='Event',
-            Payload=json.dumps(payload)
-        )
-        print("Lambda Invocation Response:", response)
-    except Exception as e:
-        print("Error invoking Lambda function:", e)
+    requests.post(api_gateway_url, json=payload)
